@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: scraper-cronjob
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: scraper
+              image: marsboy02/node-scraper:lastest
+              env:
+                - name: CRAWL_TYPE
+                  value: "FA1"
+                - name: REDIS_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: scraper-cm
+                      key: REDIS_HOST
+                - name: REDIS_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: scraper-cm
+          restartPolicy: OnFailure
