@@ -23,4 +23,5 @@ spec:
                   valueFrom:
                     configMapKeyRef:
                       name: scraper-cm
+                      key: REDIS_PORT
           restartPolicy: OnFailure
